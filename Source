@@ -1,7 +1,6 @@
 local Stellarus = {}
 
 function Stellarus:CreateFKick(desc, errorCode)
-
 	local FakeKickedGame = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local Disconnected = Instance.new("TextLabel")
@@ -9,6 +8,9 @@ function Stellarus:CreateFKick(desc, errorCode)
 	local UICorner = Instance.new("UICorner")
 	local E = Instance.new("Frame")
 	local Description = Instance.new("TextLabel")
+	local player = game.Players.LocalPlayer
+	local char = player.Character or player.CharacterAdded:wait()
+	local human = char:WaitForChild("Humanoid")
 
 	FakeKickedGame.Name = "FakeKickedGame"
 	FakeKickedGame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -65,6 +67,26 @@ function Stellarus:CreateFKick(desc, errorCode)
 	Description.TextSize = 20.000
 	Description.TextWrapped = true
 	
+	local function CreateBlur()
+		local Blur = Instance.new("BlurEffect")
+		Blur.Parent = game.Lighting
+		Blur.Size = 30 -- Dont modify this.
+		Blur.Name = "BlurFromTl"
+	end
+
+	if Main.Visible == true then
+		 CreateBlur(); human.WalkSpeed = 0; human.UseJumpPower = true; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed; human.JumpPower = 0;
+	end
+
+	script.Parent.Leave.MouseButton1Click:Connect(function()
+		local Pg = game:GetService("Players").LocalPlayer.PlayerGui
+		local Troll = Pg.TrollLibrary
+		local GetTl = Pg:WaitForChild("TrollLibrary")
+
+		if GetTl then
+			human.WalkSpeed = 16; human.UseJumpPower = false; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Custom; game:GetService("Lighting"):WaitForChild("BlurFromTl"):Destroy(); Troll:Destroy()
+		end
+	end)
 end
 
 return Stellarus
