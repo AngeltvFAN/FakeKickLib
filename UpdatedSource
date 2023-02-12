@@ -16,6 +16,7 @@ function Stellarus:CreateFKick(desc, errorCode)
 
 	FakeKickedGame.Name = "FakeKickedGame"
 	FakeKickedGame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	FakeKickedGame.DisplayOrder = 2000000000000
 	FakeKickedGame.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"
