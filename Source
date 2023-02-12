@@ -1,6 +1,8 @@
 local Stellarus = {}
 
 function Stellarus:CreateFKick(desc, errorCode)
+
+	settings():GetService("NetworkSettings").IncomingReplicationLag = 10000
 	local FakeKickedGame = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
 	local Disconnected = Instance.new("TextLabel")
@@ -44,6 +46,9 @@ function Stellarus:CreateFKick(desc, errorCode)
 	Leave.Text = "Leave"
 	Leave.TextColor3 = Color3.fromRGB(0, 0, 0)
 	Leave.TextSize = 16.000
+	Leave.MouseButton1Click:Connect(function()
+		settings():GetService("NetworkSettings").IncomingReplicationLag = 0
+	end)
 
 	UICorner.Parent = Leave
 
@@ -66,7 +71,7 @@ function Stellarus:CreateFKick(desc, errorCode)
 	Description.TextColor3 = Color3.fromRGB(152, 154, 154)
 	Description.TextSize = 20.000
 	Description.TextWrapped = true
-	
+
 	local function CreateBlur()
 		local Blur = Instance.new("BlurEffect")
 		Blur.Parent = game.Lighting
@@ -75,13 +80,13 @@ function Stellarus:CreateFKick(desc, errorCode)
 	end
 
 	if Main.Visible == true then
-		 CreateBlur(); human.WalkSpeed = 0; human.UseJumpPower = true; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed; human.JumpPower = 0;
+		CreateBlur(); human.WalkSpeed = 0; human.UseJumpPower = true; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed; human.JumpPower = 0;
 	end
 
-	script.Parent.Leave.MouseButton1Click:Connect(function()
+	Leave.MouseButton1Click:Connect(function()
 		local Pg = game:GetService("Players").LocalPlayer.PlayerGui
-		local Troll = Pg.TrollLibrary
-		local GetTl = Pg:WaitForChild("TrollLibrary")
+		local Troll = Pg.FakeKickedGame
+		local GetTl = Pg:WaitForChild("FakeKickedGame")
 
 		if GetTl then
 			human.WalkSpeed = 16; human.UseJumpPower = false; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Custom; game:GetService("Lighting"):WaitForChild("BlurFromTl"):Destroy(); Troll:Destroy()
