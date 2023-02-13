@@ -4,7 +4,9 @@ local version = "Beta R2"
 local Stellarus = {}
 
 function Stellarus:CreateFKick(desc, errorCode)
-
+	
+	
+	game:GetService("UserInputService").ModalEnabled = false
 	settings():GetService("NetworkSettings").IncomingReplicationLag = 10000
 	local FakeKickedGame = Instance.new("ScreenGui")
 	local Main = Instance.new("Frame")
