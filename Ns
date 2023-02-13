@@ -1,3 +1,6 @@
+local version = "Beta R2"
+
+
 local Stellarus = {}
 
 function Stellarus:CreateFKick(desc, errorCode)
