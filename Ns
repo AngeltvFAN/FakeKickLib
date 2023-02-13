@@ -1,0 +1,97 @@
+local Stellarus = {}
+
+function Stellarus:CreateFKick(desc, errorCode)
+
+	settings():GetService("NetworkSettings").IncomingReplicationLag = 10000
+	local FakeKickedGame = Instance.new("ScreenGui")
+	local Main = Instance.new("Frame")
+	local Disconnected = Instance.new("TextLabel")
+	local Leave = Instance.new("TextButton")
+	local UICorner = Instance.new("UICorner")
+	local E = Instance.new("Frame")
+	local Description = Instance.new("TextLabel")
+	local player = game.Players.LocalPlayer
+	local char = player.Character or player.CharacterAdded:wait()
+	local human = char:WaitForChild("Humanoid")
+
+	FakeKickedGame.Name = "FakeKickedGame"
+	FakeKickedGame.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	FakeKickedGame.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	Main.Name = "Main"
+	Main.Parent = FakeKickedGame
+	Main.BackgroundColor3 = Color3.fromRGB(57, 59, 61)
+	Main.BorderSizePixel = 0
+	Main.Position = UDim2.new(0.372769833, 0, 0.378640771, 0)
+	Main.Size = UDim2.new(0, 400, 0, 200)
+
+	Disconnected.Name = "Disconnected"
+	Disconnected.Parent = Main
+	Disconnected.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Disconnected.BackgroundTransparency = 1.000
+	Disconnected.Position = UDim2.new(0.25, 0, 0, 0)
+	Disconnected.Size = UDim2.new(0, 200, 0, 40)
+	Disconnected.Font = Enum.Font.SourceSansSemibold
+	Disconnected.Text = "Disconnected"
+	Disconnected.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Disconnected.TextSize = 22.000
+
+	Leave.Name = "Leave"
+	Leave.Parent = Main
+	Leave.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Leave.BorderSizePixel = 0
+	Leave.Position = UDim2.new(0.0625, 0, 0.950000048, -40)
+	Leave.Size = UDim2.new(0, 350, 0, 30)
+	Leave.Font = Enum.Font.Gotham
+	Leave.Text = "Leave"
+	Leave.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Leave.TextSize = 16.000
+	Leave.MouseButton1Click:Connect(function()
+		game:Shutdown()
+	end)
+
+	UICorner.Parent = Leave
+
+	E.Name = "E"
+	E.Parent = Main
+	E.BackgroundColor3 = Color3.fromRGB(189, 190, 190)
+	E.BorderSizePixel = 0
+	E.Position = UDim2.new(0.0625, 0, 0.200000003, 0)
+	E.Size = UDim2.new(0, 350, 0, 1)
+
+	Description.Name = "Description"
+	Description.Parent = Main
+	Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Description.BackgroundTransparency = 1.000
+	Description.BorderSizePixel = 0
+	Description.Position = UDim2.new(0.0625, 0, 0.305000007, -1)
+	Description.Size = UDim2.new(0, 350, 0, 70)
+	Description.Font = Enum.Font.SourceSans
+	Description.Text = "" ..desc.. "\n" ..errorCode.. ""
+	Description.TextColor3 = Color3.fromRGB(152, 154, 154)
+	Description.TextSize = 20.000
+	Description.TextWrapped = true
+
+	local function CreateBlur()
+		local Blur = Instance.new("BlurEffect")
+		Blur.Parent = game.Lighting
+		Blur.Size = 30 -- Dont modify this.
+		Blur.Name = "BlurFromTl"
+	end
+
+	if Main.Visible == true then
+		CreateBlur(); human.WalkSpeed = 0; human.UseJumpPower = true; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Fixed; human.JumpPower = 0;
+	end
+
+	Leave.MouseButton1Click:Connect(function()
+		local Pg = game:GetService("Players").LocalPlayer.PlayerGui
+		local Troll = Pg.FakeKickedGame
+		local GetTl = Pg:WaitForChild("FakeKickedGame")
+
+		if GetTl then
+			human.WalkSpeed = 16; human.UseJumpPower = false; game.Workspace.CurrentCamera.CameraType = Enum.CameraType.Custom; game:GetService("Lighting"):WaitForChild("BlurFromTl"):Destroy(); Troll:Destroy()
+		end
+	end)
+end
+
+return Stellarus
